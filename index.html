@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Score Batch: Drop a raw survey export and get NPS, CSAT and CES, overall ...</title>
+<meta name="description" content="Drop a raw survey export CSV and get NPS, CSAT and CES overall and broken down by agent, channel, month or plan, with 95 percent confidence intervals and sample size warnings.">
+<meta name="keywords" content="NPS calculator from CSV, calculate NPS from spreadsheet, CSAT calculator online, NPS by segment calculator">
+<meta name="author" content="Amir Hussain">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aamirtechs.github.io/survey-score-batch/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0b1f3a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Survey Score Batch">
+<meta property="og:description" content="Drop a raw survey export CSV and get NPS, CSAT and CES overall and broken down by agent, channel, month or plan, with 95 percent confidence intervals and sample size warnings.">
+<meta property="og:url" content="https://aamirtechs.github.io/survey-score-batch/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Survey Score Batch">
+<meta name="twitter:description" content="Drop a raw survey export CSV and get NPS, CSAT and CES overall and broken down by agent, channel, month or plan, with 95 percent confidence intervals and sample size warnings.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Survey Score Batch", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "author": {"@type": "Person", "name": "Amir Hussain", "url": "https://aamirtechs.com"}, "url": "https://aamirtechs.github.io/survey-score-batch/", "description": "Drop a raw survey export CSV and get NPS, CSAT and CES overall and broken down by agent, channel, month or plan, with 95 percent confidence intervals and sample size warnings."}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b1f3a;--navy2:#122c50;--gold:#d4a72c;--ink:#16233a;--muted:#5a6a84;--line:#e3e9f2;--bg:#f6f8fb;--card:#ffffff}
+*{box-sizing:border-box}body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:44px 20px 34px;text-align:center}
+header h1{font-family:'Sora',sans-serif;font-size:2rem;margin:0 0 10px}header h1 span{color:var(--gold)}
+header p{max-width:720px;margin:0 auto 16px;color:#dbe4f2}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.stats span{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 14px;font-size:.85rem}
+main{max-width:980px;margin:-18px auto 0;padding:0 16px 30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 8px 30px rgba(11,31,58,.08)}
+label{display:block;font-weight:700;font-size:.9rem;margin:14px 0 6px}
+textarea,input[type=text],input[type=number],select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+textarea{min-height:150px;font-family:ui-monospace,Menlo,monospace;font-size:.85rem}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.btn-run{background:var(--gold);color:var(--navy);border:0;border-radius:9px;padding:12px 22px;font-weight:800;cursor:pointer;font-size:1rem;margin-top:16px}
+.btn-sub{background:var(--navy);color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:700;cursor:pointer;margin:8px 8px 0 0}
+.btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--navy);border-radius:9px;padding:9px 15px;font-weight:700;cursor:pointer;margin:8px 8px 0 0}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.87rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--navy);color:#fff}
+.flag{color:#b3261e;font-weight:700}.ok{color:#137333;font-weight:700}
+pre{background:#0b1f3a;color:#e8eef8;border-radius:10px;padding:14px;overflow:auto;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
+.privacy{color:var(--muted);font-size:.9rem;margin-top:14px}
+section.how{max-width:980px;margin:22px auto;padding:0 16px}
+section.how h2{font-family:'Sora',sans-serif}
+footer{background:var(--navy);color:#dbe4f2;text-align:center;padding:24px 16px;margin-top:30px;font-size:.92rem}
+footer a{color:var(--gold)}
+.small{font-size:.85rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Survey Score Batch</h1>
+  <p>Drop a raw survey export and get NPS, CSAT and CES, overall and broken down by agent, channel, month or plan.</p>
+  <div class="stats"><span>Free</span><span>100% in your browser</span><span>No sign-up</span></div>
+</header>
+<main>
+  <div class="card">
+    <label for="fileInput">Upload a survey export CSV</label>
+    <input type="file" id="fileInput" accept=".csv,text/csv,text/plain">
+    <label for="csvInput">Or paste CSV here</label>
+    <textarea id="csvInput">agent,channel,date,score
+Agent A,chat,2026-01-05,10
+Agent A,chat,2026-01-19,9
+Agent A,email,2026-02-02,8
+Agent B,chat,2026-01-11,6
+Agent B,email,2026-02-14,10
+Agent B,phone,2026-02-20,3
+Agent A,phone,2026-01-25,10
+Agent B,chat,2026-02-08,9</textarea>
+    <div class="row">
+      <div><label for="scoreCol">Score column</label><input type="text" id="scoreCol" value="" placeholder="auto detect"></div>
+      <div><label for="typeSel">Score type</label>
+        <select id="typeSel"><option value="">Auto detect</option><option value="nps">NPS (0-10)</option><option value="csat">CSAT (1-5)</option><option value="ces">CES (1-7)</option></select></div>
+      <div><label for="groupCol">Group by column</label><input type="text" id="groupCol" value="" placeholder="agent, channel, plan..."></div>
+      <div><label for="dateCheck">Group column is a date (bucket by month)</label>
+        <select id="dateCheck"><option value="">No</option><option value="yes">Yes, bucket by month</option></select></div>
+    </div>
+    <button class="btn-run" id="runBtn">Calculate scores</button>
+    <div id="summary" class="small" style="margin-top:12px"></div>
+    <div id="results"></div>
+    <canvas id="chart" width="860" height="260" style="max-width:100%;margin-top:14px"></canvas>
+    <div>
+      <button class="btn-sub" id="dlCsv" type="button" style="display:none">Download summary CSV</button>
+      <button class="btn-sub" id="dlPng" type="button" style="display:none">Download chart PNG</button>
+    </div>
+
+    <p class="privacy">Runs 100% in your browser. Your files never leave this device.</p>
+  </div>
+</main>
+<section class="how">
+  <h2>How it works</h2>
+  <ul>
+      <li>CSV upload with automatic score column detection for 0 to 10 NPS, 1 to 5 CSAT and 1 to 7 CES scales.</li>
+      <li>Overall score with promoter, passive and detractor split for NPS and satisfied share for CSAT and CES.</li>
+      <li>Group by any other column such as agent, channel, plan, or a date column bucketed by month.</li>
+      <li>95 percent confidence interval and a sample size warning on every segment, plus a summary CSV and chart PNG export.</li>
+  </ul>
+</section>
+<footer>
+  <p>Built by Amir Hussain, operations manager and founder of <a href="https://aamirtechs.com" target="_blank" rel="noopener">AamirTechs: operations, customer support and e-commerce services</a>.</p>
+  <p><a href="https://github.com/aamirtechs" target="_blank" rel="noopener">More open source tools on GitHub</a></p>
+</footer>
+<script src="src/logic.js"></script>
+<script>
+
+var L = window.SurveyScoreBatch;
+var lastAnalysis = null;
+function summarizeLine(s, label) {
+  var extra = "";
+  if (s.type === "nps" && s.promoters !== undefined) { extra = " Promoters " + s.promoterPct + "%, passives " + s.passivePct + "%, detractors " + s.detractorPct + "%."; }
+  if (s.type === "csat") { extra = " Satisfied (4-5) share is the score."; }
+  if (s.type === "ces") { extra = " Easy (5-7) share is the score."; }
+  return label + ": score " + s.score + " (n=" + s.n + ", mean " + s.mean + ", 95% CI " + s.ciLow + " to " + s.ciHigh + ")." + extra + (s.warning ? " Warning: " + s.warning : "");
+}
+function run() {
+  var group = document.getElementById("groupCol").value.trim();
+  var opts = {
+    scoreColumn: document.getElementById("scoreCol").value.trim() || undefined,
+    type: document.getElementById("typeSel").value || undefined,
+    groupColumn: group || undefined,
+    groupIsDate: document.getElementById("dateCheck").value === "yes"
+  };
+  var a = L.analyzeCSV(document.getElementById("csvInput").value, opts);
+  if (a.error) { document.getElementById("summary").textContent = a.error; return; }
+  lastAnalysis = a;
+  document.getElementById("summary").textContent = "Score column \"" + a.scoreColumn + "\" detected as " + a.type.toUpperCase() + " across " + a.rowCount + " rows. " + summarizeLine(a.overall, "Overall");
+  var html = "";
+  if (a.segments.length) {
+    html = "<table><tr><th>Segment</th><th>n</th><th>Score</th><th>Mean</th><th>95% CI</th><th>Warning</th></tr>";
+    a.segments.forEach(function (s) {
+      html += "<tr><td>" + String(s.segment).replace(/</g, "&lt;") + "</td><td>" + s.n + "</td><td>" + s.score + "</td><td>" + s.mean + "</td><td>" + s.ciLow + " to " + s.ciHigh + "</td><td>" + (s.warning ? '<span class="flag">' + s.warning + "</span>" : "") + "</td></tr>";
+    });
+    html += "</table>";
+  }
+  document.getElementById("results").innerHTML = html;
+  drawChart(a);
+  document.getElementById("dlCsv").style.display = "inline-block";
+  document.getElementById("dlPng").style.display = "inline-block";
+}
+function drawChart(a) {
+  var canvas = document.getElementById("chart");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var items = a.segments.length ? a.segments : [Object.assign({}, a.overall, { segment: "Overall" })];
+  var maxAbs = a.type === "nps" ? 100 : 100;
+  var barW = Math.min(90, (canvas.width - 120) / Math.max(1, items.length) - 14);
+  items.forEach(function (s, i) {
+    var x = 70 + i * (barW + 14);
+    var zeroY = a.type === "nps" ? 190 : 220;
+    var h = Math.abs(s.score) / maxAbs * 150;
+    var y = s.score >= 0 ? zeroY - h : zeroY;
+    ctx.fillStyle = s.score >= 0 ? "#122c50" : "#b3261e";
+    ctx.fillRect(x, y, barW, h);
+    ctx.fillStyle = "#d4a72c";
+    ctx.fillRect(x, (s.score >= 0 ? y : y + h) - 3, barW, 3);
+    ctx.fillStyle = "#16233a";
+    ctx.font = "12px sans-serif";
+    ctx.fillText(String(s.segment).slice(0, 12), x, 245);
+    ctx.fillText(String(s.score), x, (s.score >= 0 ? y : y + h) - 8 > 10 ? (s.score >= 0 ? y - 6 : y + h + 14) : 12);
+  });
+  ctx.fillStyle = "#5a6a84";
+  ctx.fillText(a.type.toUpperCase() + " by segment", 70, 20);
+}
+document.getElementById("runBtn").addEventListener("click", run);
+document.getElementById("fileInput").addEventListener("change", function (e) {
+  var f = e.target.files[0]; if (!f) { return; }
+  var reader = new FileReader();
+  reader.onload = function () { document.getElementById("csvInput").value = String(reader.result); run(); };
+  reader.readAsText(f);
+});
+document.getElementById("dlCsv").addEventListener("click", function () {
+  var blob = new Blob([L.buildSummaryCSV(lastAnalysis)], { type: "text/csv" });
+  var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "survey-summary.csv"; a.click(); URL.revokeObjectURL(a.href);
+});
+document.getElementById("dlPng").addEventListener("click", function () {
+  var a = document.createElement("a"); a.href = document.getElementById("chart").toDataURL("image/png"); a.download = "survey-chart.png"; a.click();
+});
+run();
+
+</script>
+</body>
+</html>
